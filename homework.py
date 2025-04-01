@@ -35,6 +35,8 @@ sequence_index = 0
 direction = 1
 steps = 0
 
+wait_time = 10/float(1000)
+
 class Recorder:
     def __init__(self):
         self.recording = False
