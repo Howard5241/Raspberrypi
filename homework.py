@@ -6,7 +6,34 @@ import pyaudio
 import wave
 import sys
 
+import sys
+import time
+import RPi.GPIO as GPIO
+ 
+GPIO.setmode(GPIO.BCM)
+ 
+STEPS_PER_REVOLUTION = 32 * 64
+SEQUENCE = [[1, 0, 0, 0], 
+            [1, 1, 0, 0],
+            [0, 1, 1, 0],
+            [0, 0, 1, 1]]
+SEQUENCE1 = SEQUENCE
+SEQUENCE2 = [0, 0, 0, 1], 
+            [0, 0, 1, 0],
+            [0, 1, 0, 0],
+            [1, 0, 0, 0]]
 
+STEPPER_PINS = [17,18,27,22]
+for pin in STEPPER_PINS:
+  GPIO.setup(pin,GPIO.OUT)
+  GPIO.output(pin, GPIO.LOW)
+ 
+SEQUENCE_COUNT = len(SEQUENCE)
+PINS_COUNT = len(STEPPER_PINS)
+ 
+sequence_index = 0
+direction = 1
+steps = 0
 
 class Recorder:
     def __init__(self):
