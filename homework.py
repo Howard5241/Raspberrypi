@@ -110,6 +110,11 @@ if __name__ == '__main__':
     if response.status_code == 200:
         data = response.json()
         print(f"辨識结果: {data['sentence']}")
+
+        if "逆" in data['sentence']:
+          SEQUENCE = SEQUENCE1
+        else:
+          SEQUENCE = SEQUENCE2
     else:
         data = response.json()
         print(data)
