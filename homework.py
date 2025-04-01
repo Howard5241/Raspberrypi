@@ -117,6 +117,29 @@ if __name__ == '__main__':
           SEQUENCE = SEQUENCE1
         else:
           SEQUENCE = SEQUENCE2
+
+        try:
+          print('按下 Ctrl-C 可停止程式')
+          while True:
+              for pin in range(0, PINS_COUNT):
+                  GPIO.output(STEPPER_PINS[pin], SEQUENCE[sequence_index][pin])
+       
+              steps += direction
+              if steps >= STEPS_PER_REVOLUTION:
+                  direction = -1
+              elif steps < 0:
+                  direction = 1
+       
+              sequence_index += direction
+              sequence_index %= SEQUENCE_COUNT
+       
+              print('index={}, direction={}'.format(sequence_index, direction))
+              time.sleep(wait_time)
+      except KeyboardInterrupt:
+          print('關閉程式')
+      finally:
+          GPIO.cleanup()
+        
     else:
         data = response.json()
         print(data)
